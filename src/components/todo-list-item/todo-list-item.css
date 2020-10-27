@@ -9,6 +9,7 @@ width: 35px;
     flex:1 0;
     user-select: none;
     line-height: 2em;
+    cursor: pointer;
 }
 .btn{
     margin-left: .9em;
