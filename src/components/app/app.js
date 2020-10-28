@@ -12,6 +12,7 @@ class App extends React.Component {
     this.state = {
       toDoData: [],
       restoreData: [],
+      searchInput:''
     };
   }
   /**delete an element from an array toDoData */
@@ -91,8 +92,15 @@ class App extends React.Component {
   };
   /**change elem style if done */
   onToggleDone = (id) => {
+    let filterElem = Object.values(
+      document.querySelectorAll(".item-filters")
+    ).find((elem) => {
+      if (elem.classList.contains("btn-info")) {
+        return elem;
+      }
+    });
     this.setState(({ toDoData, restoreData }) => {
-      let elemsToMakeDone = toDoData.map((elem) => {
+      toDoData.map((elem) => {
         if (elem.id === id) {
           if (!elem.done) {
             elem.done = true;
@@ -102,75 +110,39 @@ class App extends React.Component {
         }
         return elem;
       });
+     if(filterElem.innerHTML=='Done'){
+      let elemsToMakeDone=toDoData.filter(elem=>elem.done)
       return {
         toDoData: elemsToMakeDone,
       };
+     }else if(filterElem.innerHTML=='Active'){
+      let elemsToMakeDone=toDoData.filter(elem=>!elem.done)
+      return {
+        toDoData: elemsToMakeDone,
+      };
+     }else{
+      let elemsToMakeDone=toDoData;
+      return {
+        toDoData: elemsToMakeDone,
+     }
+    }
     });
   };
   /**find a task in an array toDoData */
-  findTask = (e) => {
-    let filterElem = Object.values(
-      document.querySelectorAll(".item-filters")
-    ).find((elem) => {
-      if (elem.classList.contains("btn-info")) {
-        return elem;
-      }
-    });
-    this.setState(({ toDoData, restoreData }) => {
-      if (e.target.value === "") {
-        console.log('empty input')
-        e.preventDefault();
-        
-      }
-      let foundTask = this.state.restoreData.filter((elem) => {
-        if (elem.label.toLowerCase() === e.target.value.toLowerCase()) {
-          return elem;
-        }
-      });
-      if (filterElem.innerHTML === "All") {
-        console.log("filter in All");
-        return {
-          toDoData: foundTask,
-        };
-      } else if (filterElem.innerHTML === "Active") {
-        console.log("filter in Active");
-        if (document.querySelector(".search-input").value !== "") {
-          let foundTask = restoreData.filter((elem) => {
-            if (
-              elem.label.toLowerCase() === e.target.value.toLowerCase() &&
-              !elem.done
-            ) {
-              return elem;
-            }
-          });
-          if (foundTask.length !== 0) {
-            return {
-              toDoData: foundTask,
-            };
-          } else {
-            return { toDoData: [] };
-          }
-        }
-      } else {
-        console.log("filter in Done");
-        let foundTask = restoreData.filter((elem) => {
-          if (
-            elem.label.toLowerCase() === e.target.value.toLowerCase() &&
-            elem.done
-          ) {
-            return elem;
-          }
-        });
-        if (foundTask.length !== 0) {
-          return {
-            toDoData: foundTask,
-          };
-        } else {
-          return { toDoData: [] };
-        }
-      }
-    });
-  };
+  onchangeFindTask=(value)=>{
+this.setState(({searchInput})=>{
+  return {searchInput:value}
+})
+  }
+  findTask=(items,pattern)=>{
+    if(pattern==''){
+      return items
+    }
+  return items.filter((elem)=>{
+      if(elem.label.indexOf(pattern)>-1)
+     return elem
+    })
+  }
   /**change filters */
   toggleFilter = (e) => {
     Object.values(document.querySelectorAll(".item-filters")).map((elem) => {
@@ -197,6 +169,8 @@ class App extends React.Component {
   };
 
   render() {
+  
+   let filteredElems=this.findTask(this.state.toDoData,this.state.searchInput)
     let tasksToDo = this.state.restoreData.filter(
       (elem) => elem.done === false
     );
@@ -205,12 +179,12 @@ class App extends React.Component {
       <div className="app-wrapper">
         <AppHeader toDo={tasksToDo.length} done={doneTasks.length} />
         <AppSearchPanel
-          findTask={this.findTask}
+          onchangeFindTask={this.onchangeFindTask}
           toggleFilter={this.toggleFilter}
         />
         <AddFormElem addElem={this.addElemToList} />
         <ToDoList
-          todos={this.state.toDoData}
+          todos={filteredElems}
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
