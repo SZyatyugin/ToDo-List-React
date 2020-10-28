@@ -7,11 +7,11 @@ class AppSearchPanel extends React.Component{
  
   render(){
 
-    let{findTask,getAll,getActive,getDone}=this.props;
+    let{findTask,toggleFilter}=this.props;
   return (
     <form className='search-input__wrapper'>
 <input className='search-input' type='text' placeholder='Search' onChange={findTask}/>
-<ItemStatusFilter getAll={getAll} getActive={getActive} getDone={getDone}/>
+<ItemStatusFilter toggleFilter={toggleFilter}/>
     </form>
     )
  } 
