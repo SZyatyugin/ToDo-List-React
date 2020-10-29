@@ -19,7 +19,7 @@ this.props.onchangeFindTask(value)
  
   render(){
 
-    let{onchangeFindTask,toggleFilter}=this.props;
+    let{toggleFilter}=this.props;
   return (
     <form className='search-input__wrapper'>
 <input className='search-input' type='text' placeholder='Search' value={this.state.searchInput} onChange={this.getValueOnChange}/>
