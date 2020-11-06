@@ -20,8 +20,10 @@ class App extends React.Component {
     
     this.setState(({toDoData}) => {
       let elemsToDelete = toDoData.findIndex((elem) => elem.id === id);
-      toDoData.splice(elemsToDelete, 1);
-      let elemsToShow = toDoData;
+      let elemsToShow = [
+        ...toDoData.slice(0,elemsToDelete),
+        ...toDoData.slice(elemsToDelete+1,toDoData.length)
+      ];
         return {
           toDoData: elemsToShow,
         };
@@ -30,7 +32,7 @@ class App extends React.Component {
   };
   /**add new task to the an array toDoData */
   addElemToList = (value) => {
-    this.setState(({ toDoData, restoreData }) => {
+    this.setState(({toDoData}) => {
       let arrayofId = toDoData.map((elem) => elem.id);
       let id = 0;
       arrayofId.map((elem) => {
@@ -51,7 +53,8 @@ class App extends React.Component {
   /**change elem style if important */
   onToggleImportant = (id) => {
     this.setState(({ toDoData }) => {
-      let elemsToMakeImportant = toDoData.map((elem) => {
+      let elemsToMakeImportant=[...toDoData];
+      elemsToMakeImportant.map((elem) => {
         if (elem.id === id) {
           if (!elem.important) {
             elem.important = true;
@@ -68,8 +71,8 @@ class App extends React.Component {
   };
   /**change elem style if done */
   onToggleDone = (id) => {
-   this.setState(({ toDoData, restoreData }) => {
-      let elemsToMakeDone=toDoData.map((elem) => {
+   this.setState(({toDoData}) => {
+      let elemsToMakeDone=[...toDoData].map((elem) => {
         if (elem.id === id) {
           if (!elem.done) {
             elem.done = true;
