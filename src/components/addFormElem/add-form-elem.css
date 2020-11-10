@@ -1,10 +1,10 @@
-.item-add-form{
-margin-top:1em;
-display: flex;
+.item-add-form {
+    margin-top: 1em;
+    display: flex;
 }
-.item-add-form>button{
-    flex:1 0;
+.item-add-form > button {
+    flex: 1 0;
 }
-.item-add-form>input{
-    flex:0 0 70%;
+.item-add-form > input {
+    flex: 0 0 70%;
 }

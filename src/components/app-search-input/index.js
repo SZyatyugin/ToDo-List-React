@@ -1,3 +1,3 @@
-import AppSearchPanel from './app-search-panel';
+import AppSearchPanel from "./app-search-panel";
 
-export default AppSearchPanel
+export default AppSearchPanel;

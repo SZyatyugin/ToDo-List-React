@@ -1,23 +1,23 @@
-.todo-list-item{
+.todo-list-item {
     display: flex;
-padding: .3rem;
+    padding: 0.3rem;
 }
-.todo-list-item button{
-width: 35px;
+.todo-list-item button {
+    width: 35px;
 }
-.todo-list-item-label{
-    flex:1 0;
+.todo-list-item-label {
+    flex: 1 0;
     user-select: none;
     line-height: 2em;
     cursor: pointer;
 }
-.btn{
-    margin-left: .9em;
+.btn {
+    margin-left: 0.9em;
 }
-.todo-list-item.important{
+.todo-list-item.important {
     font-weight: bold;
-    color:steelblue
+    color: steelblue;
 }
-.todo-list-item.done{
+.todo-list-item.done {
     text-decoration: line-through;
 }

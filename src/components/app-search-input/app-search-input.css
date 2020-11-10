@@ -1,8 +1,8 @@
-.search-input{
-    width:auto;
-    flex-grow:1;
+.search-input {
+    width: auto;
+    flex-grow: 1;
     margin-right: 3px;
 }
-.search-input__wrapper{
+.search-input__wrapper {
     display: flex;
 }
